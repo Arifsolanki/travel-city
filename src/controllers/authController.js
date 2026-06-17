@@ -72,7 +72,40 @@ const login = async (req, res) => {
                 data: null,
             });
     }
+};
+
+const changePassword = async (req, res) => {
+    try {
+        const {oldPassword, newPassword} = req.body;
+
+        const user = await User.findById(req.user._id).select("+password")
+
+        if(user.password !== oldPassword){
+            return res.status(400).json({
+                success: false,
+                message: "Old password is incorrect",
+                data: null,
+            });
+        }
+
+        user.password == newPassword;
+
+        await user.save();
+
+         return res.status(200).json({
+                success: true,
+                message: "Password changed succesful",
+                data: null,
+            }); 
+
+    } catch (error) {
+        return res.status(500).json({
+                success: false,
+                message: error.message,
+                data: null,
+            });
+    }
 }
 
 
-module.exports = {signup, login}
+module.exports = {signup, login, changePassword,}
