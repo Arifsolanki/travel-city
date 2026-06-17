@@ -34,7 +34,34 @@ const getCities = async (req, res) => {
   }
 };
 
+const getCityById = async (req, res) => {
+  try {
+    const city = await City.findById(req.params.id);
+    if (!city) {
+      return res.status(404).json({
+        success: false,
+        message: "City not found",
+        data: null,
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "City fetched successfully",
+      data: city,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
 module.exports = { 
     createCity,
-    getCities
+    getCities,
+    getCityById
 };
+
+
