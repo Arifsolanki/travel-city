@@ -1,5 +1,5 @@
 const Favorite = require("../models/Favorite");
-
+const mongoose = require("mongoose");
 let sendRes = {
     success: false,
     message: 'Something went wrong',
@@ -60,5 +60,43 @@ const getFavorites = async (req, res) => {
         });
     }
 };
+const getFavoritesById = async (req, res) => {
+    try {
+        const { id } = req.params;
 
-module.exports = {addFavorite,getFavorites}
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send({
+                success: false,
+                message: "Invalid Favorites ID",
+                data: null
+            });
+        }
+
+        const favoriteData = await Favorite.findById(id)
+            .populate("user");
+
+        if (!favoriteData) {
+            return res.status(404).send({
+                success: false,
+                message: "Favorite not found",
+                data: null
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Favorite fetched successfully",
+            data: favoriteData
+        });
+
+    } catch (error) {
+        console.log("Error fetching favorites:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+module.exports = {addFavorite,getFavorites,getFavoritesById}

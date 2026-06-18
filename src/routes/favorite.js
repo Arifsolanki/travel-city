@@ -4,5 +4,6 @@ const favoriteController = require("../controller/favorite")
 
 route.post("/", favoriteController.addFavorite)
 route.get("/", favoriteController.getFavorites);
+route.get("/:id", favoriteController.getFavoritesById);
 
 module.exports = route
