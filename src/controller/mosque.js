@@ -50,7 +50,7 @@ const addMosque = async (req, res) => {
         if(mosqueDetails.images){
             createMosque.images = mosqueDetails.images
         }
-        let mosqueDbRes = await mosque.create(createMosque)
+        let mosqueDbRes = await Mosque.create(createMosque)
     
         if(mosqueDbRes){
             sendRes.success = true
@@ -159,5 +159,35 @@ const updateMosque = async (req, res) => {
         });
     }
 };
+const deleteMosque = async (req, res) => {
+    try {
+        const { id } = req.params;
 
-module.exports = {addMosque,getMosques,getMosqueById,updateMosque}
+        const deleteResult = await Mosque.deleteOne({ _id: id });
+
+        if (deleteResult.deletedCount === 0) {
+            return res.status(404).send({
+                success: false,
+                message: "Mosque not found",
+                data: null
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Mosque deleted successfully",
+            data: null
+        });
+    } catch (error) {
+        console.log("Error deleting mosque:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+
+
+module.exports = {addMosque,getMosques,getMosqueById,updateMosque,deleteMosque}

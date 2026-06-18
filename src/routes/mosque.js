@@ -6,4 +6,5 @@ route.post("/", mosqueController.addMosque)
 route.get("/", mosqueController.getMosques);
 route.get("/:id", mosqueController.getMosqueById);
 route.patch("/:id", mosqueController.updateMosque);
+route.delete("/:id", mosqueController.deleteMosque);
 module.exports = route
