@@ -52,7 +52,31 @@ const createCultureNote = async (req, res) => {
     })
 }
 }
+const getCultureNote = async (req, res) => {
+    try {
+        let noteDetails = req.query
+        let filternote = {}
+
+        if (noteDetails.title) {
+            filternote.title = noteDetails.title
+        }
+        if (noteDetails.country) {
+            filternote.country = noteDetails.country
+        }
+
+        let noteDbRes = await Note.find(filternote)
+
+        sendRes.message = "Culture Note fetched successfully!"
+        sendRes.data = noteDbRes
+
+        return res.status(200).send(sendRes)
+    } catch (error) {
+        console.log("Errro in getting Cultura Note", error)
+        return res.status(500).send(sendRes)
+    }
+}
 
 module.exports = {
     createCultureNote,
+    getCultureNote,
 }
