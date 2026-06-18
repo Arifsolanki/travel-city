@@ -181,9 +181,38 @@ const updateHotel = async (req,res)=>{
     }
 }
 
+const deleteHotel = async (req,res)=>{
+     sendRes = {
+        "success": false,
+        "message": "Something went wrong",
+        "data": {}
+    }
+    try {
+       const hotelId = req.params.id
+       
+       const deletedData = await Hotel.findById(hotelId)
+       const deleteById = await Hotel.findByIdAndDelete(hotelId)
+
+       if(!deleteById){
+        sendRes.message = "Wrong Id provided"
+        return res.status(400).send(sendRes)
+       }
+
+       sendRes.success = true
+       sendRes.message = "The following data has been deleted successfully"
+       sendRes.data = deletedData
+
+       return res.status(200).send(sendRes)
+    } catch (error) {
+        console.log("Error while deleting hotel by Id", error);
+        res.status(400).send(sendRes)
+    }
+}
+
 module.exports = {
     addHotel,
     getHotels,
     getHotelsById,
-    updateHotel
+    updateHotel,
+    deleteHotel
 }
