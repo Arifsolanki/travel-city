@@ -37,7 +37,35 @@ const getRestaurants = async (req, res) => {
   }
 };
 
+
+const getRestaurantById = async (req, res) => {
+  let sendRes = {
+    success: false,
+    message: "Something went wrong",
+    data: null,
+  };
+  try {
+    if (!req.params.id) {
+      sendRes.message = "ID is required";
+      return res.status(400).send(sendRes);
+    }
+    const restaurant = await Restaurant.findById(req.params.id);
+    if (!restaurant) {
+      sendRes.message = "Restaurant not found";
+      return res.status(404).send(sendRes);
+    }
+    sendRes.success = true;
+    sendRes.message = "Restaurant fetched successfully";
+    sendRes.data = restaurant;
+    return res.status(200).send(sendRes);
+  } catch (error) {
+    console.log("Error in getting restaurant", error);
+    return res.status(500).send(sendRes);
+  }
+};
+
 module.exports = {
     createRestaurant,
-    getRestaurants
+    getRestaurants,
+    getRestaurantById
 };
