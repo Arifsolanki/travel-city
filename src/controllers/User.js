@@ -74,4 +74,27 @@ const getUsers = async (req, res) => {
     }
 };
 
-module.exports = { addUser, getUsers };
+const updateUser = async (req, res) => {
+    try {
+        let userId = req.params.id;
+        let updateData = req.body;
+
+        const updatedUser = await user.findByIdAndUpdate(userId, updateData);
+
+        if (!updatedUser) {
+            sendRes.success = false;
+            sendRes.message = 'User not found';
+            return res.status(404).json(sendRes);
+        }
+
+        sendRes.success = true;
+        sendRes.message = 'User updated successfully';
+        sendRes.data = updatedUser;
+        return res.status(200).json(sendRes);
+    } catch (error) {
+        console.log("error while updating user: ", error);
+        return res.status(500).json(sendRes);
+    }
+};
+
+module.exports = { addUser, getUsers, updateUser };
