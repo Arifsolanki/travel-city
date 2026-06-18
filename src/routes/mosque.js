@@ -4,5 +4,5 @@ const mosqueController = require("../controller/mosque")
 
 route.post("/", mosqueController.addMosque)
 route.get("/", mosqueController.getMosques);
-
+route.get("/:id", mosqueController.getMosqueById);
 module.exports = route

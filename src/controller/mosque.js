@@ -1,4 +1,5 @@
-const mosque = require("../models/Mosque");
+const Mosque = require("../models/Mosque");
+const mongoose = require("mongoose");
 
 let sendRes = {
     success: false,
@@ -65,7 +66,7 @@ const addMosque = async (req, res) => {
 
 const getMosques = async (req, res) => {
     try {
-        const mosques = await mosque.find()
+        const mosques = await Mosque.find()
             .populate("city")
             .populate("country");
 
@@ -84,4 +85,44 @@ const getMosques = async (req, res) => {
         });
     }
 };
-module.exports = {addMosque,getMosques}
+const getMosqueById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send({
+                success: false,
+                message: "Invalid Mosque ID",
+                data: null
+            });
+        }
+
+        const mosqueData = await Mosque.findById(id)
+            .populate("city")
+            .populate("country");
+
+        if (!mosqueData) {
+            return res.status(404).send({
+                success: false,
+                message: "Mosque not found",
+                data: null
+            });
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "Mosque fetched successfully",
+            data: mosqueData
+        });
+
+    } catch (error) {
+        console.log("Error fetching mosque:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+module.exports = {addMosque,getMosques,getMosqueById}
