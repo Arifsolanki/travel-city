@@ -1,6 +1,6 @@
 require('dotenv').config();
 require('./src/models/db');
-
+const noteRouter = require("./src/routes/culturenote")
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -29,13 +29,10 @@ app.get('/api/health', (req, res) => {
 });
 
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
-
-
-
-app.use(notFound);
+app.use('/api/culture-notes', noteRouter);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.use(notFound);
+
+app.listen(PORT, () => {console.log(`Server running on port ${PORT}`);});
