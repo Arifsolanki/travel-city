@@ -1,5 +1,5 @@
 const VisaInfo = require("../models/VisaInfo")
-
+const country = require("../models/Country")
 const addVisaInfo = async (req, res) => {
 
     let giveRes = {
@@ -74,8 +74,55 @@ const addVisaInfo = async (req, res) => {
 
         return res.status(500).send(giveRes)
     }
-
 }
+
+const getVisaInfo = async (req, res) => {
+    let giveRes = {
+        success: false,
+        message: "Something went wrong",
+        data: null
+    }
+
+    try {
+        let visaDetails = req.body
+
+        let filterVisaInfo = {}
+
+        if (visaDetails.country) {
+            filterVisaInfo.country = visaDetails.country
+        }
+
+        if (visaDetails.passportCountry) {
+            filterVisaInfo.passportCountry = visaDetails.passportCountry
+        }
+
+        if (visaDetails.visaType) {
+            filterVisaInfo.visaType = visaDetails.visaType
+        }
+
+        if (visaDetails.applicationMode) {
+            filterVisaInfo.applicationMode = visaDetails.applicationMode
+        }
+
+        let visaInfoDbRes = await VisaInfo.find(filterVisaInfo).populate("country")
+
+        giveRes.success = true
+        giveRes.message = "Visa Info fetched successfully!"
+        giveRes.data = visaInfoDbRes
+
+        return res.status(200).send(giveRes)
+
+    } catch (error) {
+        console.log("Error in getting visa info", error)
+
+        giveRes.message = error.message
+
+        return res.status(500).send(giveRes)
+    }
+}
+
+
 module.exports = {
     addVisaInfo,
+    getVisaInfo
 }
