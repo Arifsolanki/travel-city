@@ -70,6 +70,8 @@ const getHotels = async (req,res)=>{
     try {
         const filter = req.body
         const filterHotel = {}
+        const{sort,order} = req.query
+        const plusOrMinus = order === "asc"? 1:-1
 
         if(filter.name){
             filterHotel.name = {$regex:filter.name, $options:"i"}
@@ -89,6 +91,7 @@ const getHotels = async (req,res)=>{
         .populate('city')
         .populate('country')
         .populate('nearbyMosques.mosque')
+        .sort({[sort]:plusOrMinus})
 
         sendRes.success = true
         sendRes.message = "Here is the list of Hotels"
@@ -101,6 +104,7 @@ const getHotels = async (req,res)=>{
         .populate('city')
         .populate('country')
         .populate('nearbyMosques.mosque')
+        
 
         if(hotelByFilter.length === 0){
             sendRes.message = "No data matches the value passed"
@@ -110,6 +114,9 @@ const getHotels = async (req,res)=>{
         sendRes.success = true
         sendRes.message = "Here is your required data"
         sendRes.data = hotelByFilter
+
+        console.log(sort);
+        
 
         return res.status(200).send(sendRes)
         
