@@ -1,4 +1,5 @@
 const Favorite = require("../models/Favorite");
+const User = require("../models/User")
 const mongoose = require("mongoose");
 let sendRes = {
     success: false,
