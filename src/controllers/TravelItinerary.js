@@ -106,5 +106,34 @@ const getItinerary = async (req, res) => {
   }
 };
 
+const getItineraryById = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-module.exports ={addItinerary, getItinerary}
+    let dbRes = await TravelItinerary.findById(id)
+      .populate("user")
+      .populate("country")
+      .populate("cities")
+      .populate("days.city");
+
+    if (!dbRes) {
+      return res.status(404).send({
+        success: false,
+        message: "Itinerary not found",
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "Itinerary fetched successfully!",
+      data: dbRes,
+    });
+
+  } catch (error) {
+    console.log("Error in get by id", error);
+    return res.status(500).send({ success: false, message: "Server error" });
+  }
+};
+
+
+module.exports ={addItinerary, getItinerary, getItineraryById}
