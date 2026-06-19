@@ -29,8 +29,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 const localGuideRoutes = require('./src/routes/LocalGuide');
+const visaInfoRoutes = require("./src/routes/VisaInfo")
 
 app.use("/api/local-guides",localGuideRoutes);
+app.use("/api/visa-info",visaInfoRoutes)
+
 
 app.use(notFound);
 
