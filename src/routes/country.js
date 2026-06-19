@@ -9,5 +9,6 @@ router.post('/add', countryRoutes.createCountry);
 router.get('/list', countryRoutes.getCountry);
 router.get('/list/:id', countryRoutes.getCountryById);
 router.put('/update/:id', countryRoutes.updateCountry);
+router.delete('/delete/:id', countryRoutes.deleteCountry);
 
 module.exports = router;

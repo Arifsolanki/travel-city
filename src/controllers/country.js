@@ -124,4 +124,32 @@ const updateCountry = async (req, res) => {
     }
 }
 
-module.exports = { createCountry, getCountry, getCountryById, updateCountry };
+const deleteCountry = async (req, res) => {
+    let sendRes = {
+        "success": false,   
+        "message": "Country deletion failed",
+        "data": {}
+    }           
+    try {
+        const countryId = req.params.id;
+        const deletedCountry = await Country.findByIdAndDelete(countryId);
+
+        if (!deletedCountry) {
+            sendRes.message = "Country not found";
+            return res.status(404).send(sendRes);
+        }
+
+        sendRes.success = true;
+        sendRes.message = "Country deleted successfully";
+        sendRes.data = deletedCountry;
+        return res.status(200).send(sendRes);   
+        
+    }
+        catch (error) {
+        sendRes.message = "Error deleting country";
+        return res.status(500).send (sendRes);
+    }   
+}
+   
+
+module.exports = { createCountry, getCountry, getCountryById, updateCountry, deleteCountry };
