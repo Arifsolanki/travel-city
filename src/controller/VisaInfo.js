@@ -121,8 +121,52 @@ const getVisaInfo = async (req, res) => {
     }
 }
 
+const getVisaInfoById = async (req, res) => {
+
+    let giveRes = {
+        success: false,
+        message: "Something went wrong",
+        data: null
+    }
+
+    try {
+
+        let visaInfoId = req.params.id
+
+        if (!visaInfoId) {
+
+            giveRes.message = "Visa Info ID Required"
+
+            return res.status(400).send(giveRes)
+        }
+
+        let visaInfoDbRes = await VisaInfo.findById(visaInfoId)
+
+        if (!visaInfoDbRes) {
+
+            giveRes.message = "Visa Info Not Found"
+
+            return res.status(404).send(giveRes)
+        }
+
+        giveRes.success = true
+        giveRes.message = "Visa Info fetched successfully!"
+        giveRes.data = visaInfoDbRes
+
+        return res.status(200).send(giveRes)
+
+    } catch (error) {
+
+        console.log("Error in getting Visa Info", error)
+
+        giveRes.message = error.message
+
+        return res.status(500).send(giveRes)
+    }
+}
 
 module.exports = {
     addVisaInfo,
-    getVisaInfo
+    getVisaInfo,
+    getVisaInfoById
 }
