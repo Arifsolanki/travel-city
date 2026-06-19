@@ -71,7 +71,11 @@ For each model, the CRUD should satisfy these requirements:
 1. `POST` creates a new record.
 2. `GET /` returns all records.
 3. `GET /:id` returns one record by ID.
+<<<<<<< HEAD
 4. `PUT /:id` updates one record by ID.
+=======
+4. `PUT | PATCH /:id` updates one record by ID. (Optional, you can use body if you want)(params or body, query not allowed)
+>>>>>>> upstream/main
 5. `DELETE /:id` deletes one record by ID.
 6. Invalid ObjectId should return a clear error.
 7. Missing record should return "Not found".
@@ -82,6 +86,10 @@ For each model, the CRUD should satisfy these requirements:
 ```json
 {
   "success": true,
+<<<<<<< HEAD
+=======
+  "message": "Proper Error/Success message",
+>>>>>>> upstream/main
   "data": {}
 }
 ```
@@ -91,6 +99,10 @@ For list APIs:
 ```json
 {
   "success": true,
+<<<<<<< HEAD
+=======
+  "message": "Proper Error/Success message",
+>>>>>>> upstream/main
   "data": []
 }
 ```
@@ -115,7 +127,11 @@ git checkout -b feature/country-rashid
 Example:
 
 ```txt
+<<<<<<< HEAD
 src/controllers/countryController.js
+=======
+src/controllers/country.js
+>>>>>>> upstream/main
 ```
 
 ### 4. Test APIs
@@ -124,12 +140,20 @@ Use Postman, Thunder Client, or Hoppscotch.
 
 ### 5. Commit
 
+<<<<<<< HEAD
 There should be a commit for each API created
+=======
+There should be a commit for each API created.
+>>>>>>> upstream/main
 
 EXAMPLE:
 ```bash
 git add .
+<<<<<<< HEAD
 git commit -m "Implement Country POST API"
+=======
+git commit -m "Implemented Country POST API"
+>>>>>>> upstream/main
 ```
 
 ### 6. Push
@@ -151,6 +175,10 @@ After basic CRUD is complete, add:
 3. Sorting.
 4. Filtering by city or country.
 5. Populate related fields.
+<<<<<<< HEAD
 6. JWT authentication.
+=======
+6. JWT authentication. (Not now)
+>>>>>>> upstream/main
 7. Role-based access control.
 8. Swagger API documentation.
