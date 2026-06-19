@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./src/models/db');
+const countryRoutes = require('./src/routes/country');
 
 const express = require('express');
 const cors = require('cors');
@@ -12,6 +13,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+
+app.use('/api/countries', countryRoutes);
 
 app.get('/check', (req, res) => {
   res.json({
