@@ -1,8 +1,11 @@
 require('dotenv').config();
 require('./src/models/db');
+const userRoutes = require('./src/routes/User');
 require('./src/models/Country');
 require('./src/models/City');
 require('./src/models/Mosque');
+const userRoutes = require('./src/routes/User');
+const reviewRoutes = require('./src/routes/Review');
 
 const express = require('express');
 const hotelRoutes = require("./src/routes/hotel")
@@ -47,10 +50,14 @@ app.use("/api/local-guides",localGuideRoutes);
 app.use("/api/visa-info",visaInfoRoutes)
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 
+app.use('/api/users', userRoutes);
 app.use('/api/transport-option', transportOption)
 app.use("/api/favorite", favoriteRoutes)
 app.use("/api/mosque", mosqueRoute)
 
+
+app.use('/api/users', userRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.use(notFound);
 app.use('/api/culture-notes', noteRouter);
