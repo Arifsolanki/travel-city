@@ -1,17 +1,4 @@
 require('dotenv').config();
-require('./src/models/db');
-<<<<<<< Updated upstream
-require('dotenv').config();
-require('./src/models/db');
-
-require('./src/models/Country');
-require('./src/models/City');
-require('./src/models/Mosque');
-
-const userRoutes = require('./src/routes/User');
-const reviewRoutes = require('./src/routes/Review');
-const userRoutes = require('./src/routes/User');
-const reviewRoutes = require('./src/routes/Review');
 
 const express = require('express');
 const cors = require('cors');
@@ -57,12 +44,6 @@ app.get('/api/health', (req, res) => {
 
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 
-<<<<<<< Updated upstream
-app.use('/api/transport-option', transportOption);
-app.use("/api/favorite", favoriteRoutes);
-app.use("/api/mosque", mosqueRoutes);
-
-=======
 app.use("/api/hotels", hotelRoutes)
 app.use('/api/countries', countryRoutes);
 app.use("/api/local-guides",localGuideRoutes);
@@ -71,7 +52,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/transport-option', transportOption)
 app.use("/api/favorite", favoriteRoutes)
 app.use("/api/mosque", mosqueRoute)
->>>>>>> Stashed changes
 app.use('/api/users', userRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/culture-notes', noteRouter);
