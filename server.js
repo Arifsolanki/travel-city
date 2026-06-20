@@ -12,8 +12,6 @@ const userRoutes = require('./src/routes/User');
 const reviewRoutes = require('./src/routes/Review');
 const userRoutes = require('./src/routes/User');
 const reviewRoutes = require('./src/routes/Review');
-=======
->>>>>>> Stashed changes
 
 const express = require('express');
 const cors = require('cors');
